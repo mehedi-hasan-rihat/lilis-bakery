@@ -50,7 +50,7 @@ export function CartDrawer() {
               onClick={closeDrawer}
               className="rounded-full bg-primary px-6 py-2.5 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
             >
-              Shop Cakes
+              Buy Cakes
             </Link>
           </div>
         ) : (

@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { formatPrice } from "@/lib/currency";
+import { Select } from "@/components/ui/select";
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem, openDrawer } = useCart();
@@ -89,33 +90,30 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-auto flex flex-col gap-3 pt-2">
           {product.flavors.length > 1 && (
-            <select
+            <Select
               value={flavorId}
-              onChange={(e) => handleFlavorChange(e.target.value)}
-              aria-label={`Flavour for ${product.name}`}
-              className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none"
-            >
-              {product.flavors.map((f) => (
-                <option key={f.id} value={f.id}>
-                  {f.name}
-                </option>
-              ))}
-            </select>
+              onChange={handleFlavorChange}
+              label={`Flavour for ${product.name}`}
+              className="w-full"
+              options={product.flavors.map((f) => ({
+                value: f.id,
+                label: f.name,
+              }))}
+            />
           )}
 
           <div className="flex items-center justify-between gap-3">
-            <select
+            <Select
               value={sizeId}
-              onChange={(e) => setSizeId(e.target.value)}
-              aria-label={`Size for ${product.name}`}
-              className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none"
-            >
-              {flavor.sizes.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.label} · {s.serves}
-                </option>
-              ))}
-            </select>
+              onChange={setSizeId}
+              label={`Size for ${product.name}`}
+              className="w-full"
+              options={flavor.sizes.map((s) => ({
+                value: s.id,
+                label: s.label,
+                description: s.serves,
+              }))}
+            />
             <span className="whitespace-nowrap font-display text-lg text-primary">
               {formatPrice(size.price)}
             </span>

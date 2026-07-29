@@ -25,7 +25,7 @@ export default function CartPage() {
           href="/shop"
           className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
         >
-          Shop Cakes
+          Buy Cakes
         </Link>
       </div>
     );

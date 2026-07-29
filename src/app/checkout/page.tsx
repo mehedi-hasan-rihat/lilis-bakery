@@ -3,52 +3,192 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import { useCart } from "@/lib/cart-context";
+import { useCart, type CartItem } from "@/lib/cart-context";
 import { DELIVERY_FEE, formatPrice } from "@/lib/currency";
+import { Confetti } from "@/components/confetti";
 
 type Fulfillment = "delivery" | "pickup";
 type PaymentMethod = "card" | "cash";
 
+interface ConfirmedOrder {
+  orderNumber: string;
+  items: CartItem[];
+  subtotal: number;
+  delivery: number;
+  total: number;
+  fulfillment: Fulfillment;
+  name: string;
+  placedAt: Date;
+}
+
 function generateOrderNumber() {
   return `LB-${Math.floor(10000 + Math.random() * 90000)}`;
+}
+
+function buildReceiptText(order: ConfirmedOrder) {
+  const lines = [
+    "MIMI'S DREAM CAKES",
+    "Order Receipt",
+    "----------------------------------------",
+    `Order #: ${order.orderNumber}`,
+    `Date: ${order.placedAt.toLocaleString("en-BD")}`,
+    order.name ? `Customer: ${order.name}` : undefined,
+    `Fulfillment: ${order.fulfillment === "delivery" ? "Hand delivered" : "Pickup at bakery"}`,
+    "----------------------------------------",
+    "Items:",
+    ...order.items.map(
+      (item) =>
+        `  ${item.name} (${item.flavorLabel} · ${item.sizeLabel}) x${item.quantity} — ${formatPrice(item.unitPrice * item.quantity)}`
+    ),
+    "----------------------------------------",
+    `Subtotal: ${formatPrice(order.subtotal)}`,
+    `Delivery: ${formatPrice(order.delivery)}`,
+    `Total: ${formatPrice(order.total)}`,
+    "----------------------------------------",
+    "Thank you for your order!",
+  ];
+  return lines.filter((line): line is string => Boolean(line)).join("\n");
+}
+
+function downloadReceipt(order: ConfirmedOrder) {
+  const blob = new Blob([buildReceiptText(order)], {
+    type: "text/plain;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `receipt-${order.orderNumber}.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
   const [fulfillment, setFulfillment] = useState<Fulfillment>("delivery");
   const [payment, setPayment] = useState<PaymentMethod>("card");
-  const [orderNumber, setOrderNumber] = useState<string | null>(null);
+  const [order, setOrder] = useState<ConfirmedOrder | null>(null);
 
   const delivery = fulfillment === "delivery" && subtotal > 0 ? DELIVERY_FEE : 0;
   const total = subtotal + delivery;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setOrderNumber(generateOrderNumber());
+    const formData = new FormData(event.currentTarget);
+    setOrder({
+      orderNumber: generateOrderNumber(),
+      items,
+      subtotal,
+      delivery,
+      total,
+      fulfillment,
+      name: String(formData.get("name") ?? ""),
+      placedAt: new Date(),
+    });
     clearCart();
   }
 
-  if (orderNumber) {
+  if (order) {
     return (
-      <div className="mx-auto max-w-xl px-6 py-24 text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          Order Confirmed
-        </p>
-        <h1 className="mt-2 font-display text-4xl italic text-ink">
-          Thank you — it&apos;s in the oven
-        </h1>
-        <p className="mt-4 text-muted-foreground">
-          Your order <span className="font-mono text-ink">{orderNumber}</span>{" "}
-          has been received. We&apos;ll email you a confirmation with your{" "}
-          {fulfillment === "delivery" ? "delivery" : "pickup"} details
-          shortly.
-        </p>
-        <Link
-          href="/shop"
-          className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
-        >
-          Continue Shopping
-        </Link>
+      <div className="relative mx-auto max-w-xl overflow-hidden px-6 py-24 text-center">
+        <Confetti seed={order.orderNumber} />
+
+        <div className="relative z-10">
+          <div className="animate-success-pop mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+          </div>
+
+          <div className="animate-success-fade-up" style={{ animationDelay: "0.2s" }}>
+            <p className="mt-6 font-mono text-xs uppercase tracking-widest text-accent">
+              Order Confirmed
+            </p>
+            <h1 className="mt-2 font-display text-4xl italic text-ink">
+              Thank you — it&apos;s in the oven
+            </h1>
+            <p className="mt-4 text-muted-foreground">
+              Your order{" "}
+              <span className="font-mono text-ink">{order.orderNumber}</span>{" "}
+              has been received. We&apos;ll email you a confirmation with your{" "}
+              {order.fulfillment === "delivery" ? "delivery" : "pickup"}{" "}
+              details shortly.
+            </p>
+          </div>
+
+          <div
+            className="animate-success-fade-up mt-8 rounded-lg border border-border bg-card p-6 text-left"
+            style={{ animationDelay: "0.35s" }}
+          >
+            <ul className="flex flex-col gap-4">
+              {order.items.map((item) => (
+                <li key={item.key} className="flex gap-3">
+                  <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-md bg-lavender">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes="56px"
+                      className="object-cover"
+                    />
+                    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-accent-foreground">
+                      {item.quantity}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 items-start justify-between text-sm">
+                    <div>
+                      <p className="text-ink">{item.name}</p>
+                      <p className="text-muted-foreground">
+                        {item.flavorLabel} · {item.sizeLabel}
+                      </p>
+                    </div>
+                    <p className="text-ink">
+                      {formatPrice(item.unitPrice * item.quantity)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <dl className="mt-5 space-y-2 border-t border-border pt-4 text-sm">
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Subtotal</dt>
+                <dd className="text-ink">{formatPrice(order.subtotal)}</dd>
+              </div>
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Delivery</dt>
+                <dd className="text-ink">{formatPrice(order.delivery)}</dd>
+              </div>
+            </dl>
+            <div className="mt-3 flex justify-between border-t border-border pt-3 font-display text-lg text-ink">
+              <span>Total Paid</span>
+              <span>{formatPrice(order.total)}</span>
+            </div>
+          </div>
+
+          <div
+            className="animate-success-fade-up mt-8 flex flex-wrap justify-center gap-4"
+            style={{ animationDelay: "0.5s" }}
+          >
+            <button
+              type="button"
+              onClick={() => downloadReceipt(order)}
+              className="inline-flex items-center gap-2 rounded-full border border-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+              </svg>
+              Download Receipt
+            </button>
+            <Link
+              href="/shop"
+              className="inline-block rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -69,7 +209,7 @@ export default function CheckoutPage() {
           href="/shop"
           className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
         >
-          Shop Cakes
+          Buy Cakes
         </Link>
       </div>
     );

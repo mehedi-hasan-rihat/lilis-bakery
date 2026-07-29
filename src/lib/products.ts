@@ -80,9 +80,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6800 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 9150 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11450 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6800 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9150 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11450 },
       ],
       CAKE_FLAVORS
     ),
@@ -97,9 +97,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6300 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 8650 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11000 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6300 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 8650 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11000 },
       ],
       CAKE_FLAVORS
     ),
@@ -115,8 +115,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7250 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 10050 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7250 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10050 },
       ],
       CAKE_FLAVORS
     ),
@@ -164,9 +164,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6600 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 8950 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11250 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6600 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 8950 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11250 },
       ],
       CAKE_FLAVORS
     ),
@@ -181,9 +181,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6900 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 9300 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11600 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6900 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9300 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11600 },
       ],
       CAKE_FLAVORS
     ),
@@ -199,9 +199,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7100 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 9500 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11900 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7100 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9500 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11900 },
       ],
       CAKE_FLAVORS
     ),
@@ -216,9 +216,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7250 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 9700 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 12100 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7250 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9700 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 12100 },
       ],
       CAKE_FLAVORS
     ),
@@ -233,9 +233,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6750 },
-        { id: "8in", label: "8″ round", serves: "Serves 12", price: 9100 },
-        { id: "10in", label: "10″ round", serves: "Serves 20", price: 11400 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6750 },
+        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9100 },
+        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11400 },
       ],
       CAKE_FLAVORS
     ),
@@ -251,8 +251,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 6950 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 9650 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6950 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9650 },
       ],
       CAKE_FLAVORS
     ),
@@ -267,8 +267,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7050 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 9850 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7050 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9850 },
       ],
       CAKE_FLAVORS
     ),
@@ -283,8 +283,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7350 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 10150 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7350 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10150 },
       ],
       CAKE_FLAVORS
     ),
@@ -299,8 +299,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7150 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 9950 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7150 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9950 },
       ],
       CAKE_FLAVORS
     ),
@@ -316,8 +316,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6″ round", serves: "Serves 8", price: 7450 },
-        { id: "8in", label: "8″ round", serves: "Serves 14", price: 10250 },
+        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7450 },
+        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10250 },
       ],
       CAKE_FLAVORS
     ),
