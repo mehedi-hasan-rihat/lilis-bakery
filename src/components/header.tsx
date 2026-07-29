@@ -9,6 +9,7 @@ import { formatPrice } from "@/lib/currency";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {

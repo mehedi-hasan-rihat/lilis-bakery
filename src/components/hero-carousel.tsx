@@ -12,6 +12,8 @@ interface Slide {
   subtitle: string;
   ctaLabel: string;
   ctaHref: string;
+  /** CSS object-position, tuned per photo so the subject isn't cropped out on wide/short hero bands. */
+  focus: string;
 }
 
 const SLIDES: Slide[] = [
@@ -24,6 +26,7 @@ const SLIDES: Slide[] = [
       "A small atelier making seasonal cakes, celebration bakes and petit fours from scratch.",
     ctaLabel: "Shop Best Sellers",
     ctaHref: "/shop",
+    focus: "center 22%",
   },
   {
     src: "/images/magic-unicorn.jpg",
@@ -34,6 +37,7 @@ const SLIDES: Slide[] = [
       "Gold leaf horns, rainbow manes and every showstopper a birthday table needs.",
     ctaLabel: "Shop Celebration Cakes",
     ctaHref: "/shop?category=celebration",
+    focus: "center 10%",
   },
   {
     src: "/images/lavender-rosette.jpg",
@@ -44,6 +48,7 @@ const SLIDES: Slide[] = [
       "Multi-layer designs finished with hand-painted ombré, sugar drips and silk peonies.",
     ctaLabel: "Shop Wedding Cakes",
     ctaHref: "/shop?category=wedding",
+    focus: "center 20%",
   },
   {
     src: "/images/petits-fours.jpg",
@@ -54,6 +59,7 @@ const SLIDES: Slide[] = [
       "Hand-tied boxes of macarons and petite cupcakes, baked fresh in small batches.",
     ctaLabel: "Shop Petits Fours",
     ctaHref: "/shop?category=petits-fours",
+    focus: "center 70%",
   },
 ];
 
@@ -100,9 +106,8 @@ export function HeroCarousel() {
             fill
             preload={index === 0}
             sizes="100vw"
-            className={`object-cover ${
-              index === active ? "animate-hero-kenburns" : ""
-            }`}
+            style={{ objectPosition: s.focus }}
+            className="object-cover"
           />
         </div>
       ))}

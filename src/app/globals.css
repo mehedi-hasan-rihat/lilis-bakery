@@ -66,18 +66,8 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
 
-  --animate-hero-kenburns: hero-kenburns 6s ease-out forwards;
   --animate-hero-text-in: hero-text-in 0.8s ease-out both;
   --animate-marquee: marquee 26s linear infinite;
-}
-
-@keyframes hero-kenburns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.08);
-  }
 }
 
 @keyframes hero-text-in {
