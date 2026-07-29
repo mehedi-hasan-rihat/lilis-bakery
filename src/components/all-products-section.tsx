@@ -12,7 +12,7 @@ export function AllProductsSection({ products }: { products: Product[] }) {
   const hasMore = visibleCount < products.length;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
+    <section className="mx-auto max-w-7xl px-6 pb-20">
       <div>
         <p className="font-mono text-xs uppercase tracking-widest text-accent">
           Full Collection

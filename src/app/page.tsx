@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { AllProductsSection } from "@/components/all-products-section";
+import { HeroCarousel } from "@/components/hero-carousel";
+import { Marquee } from "@/components/marquee";
 import { products, CATEGORY_LABELS, type ProductCategory } from "@/lib/products";
 
 const FEATURED_SLUGS = [
@@ -25,49 +27,9 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:py-24 md:grid-cols-2 md:items-center md:py-28">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-accent">
-            Handcrafted Cakes &amp; Sweet Treats
-          </p>
-          <h1 className="mt-4 font-display text-5xl italic leading-[1.05] text-ink sm:text-6xl">
-            The quiet art
-            <br />
-            of cake making
-          </h1>
-          <p className="mt-6 max-w-md text-base leading-7 text-muted-foreground">
-            A small atelier making seasonal cakes, celebration bakes and
-            petit fours from scratch. Every order is mixed, iced and
-            hand-delivered by the same two hands.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/shop"
-              className="rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
-            >
-              Shop Best Sellers
-            </Link>
-            <Link
-              href="/#atelier"
-              className="rounded-full border border-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            >
-              Our Atelier
-            </Link>
-          </div>
-        </div>
 
-        <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-lavender md:aspect-3/4">
-          <Image
-            src="/images/hero-cake.jpg"
-            alt="Three-tier purple ombré drip cake finished with silk peonies"
-            fill
-            preload
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
-          />
-        </div>
-      </section>
+      {/* Hero */}
+      <HeroCarousel />
 
       {/* Stats strip */}
       <section className="border-y border-border bg-lavender">
@@ -88,37 +50,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured products */}
+            {/* Categories */}
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-accent">
-              Best Sellers
-            </p>
-            <h2 className="mt-2 font-display text-3xl italic text-ink sm:text-4xl">
-              Eight pieces our regulars keep coming back for
-            </h2>
-          </div>
-          <Link
-            href="/shop"
-            className="font-mono text-xs uppercase tracking-widest text-primary hover:text-accent"
-          >
-            Shop all cakes →
-          </Link>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {/* All products */}
-      <AllProductsSection products={products} />
-
-      {/* Categories */}
-      <section className="mx-auto max-w-7xl px-6 pb-20">
         <p className="font-mono text-xs uppercase tracking-widest text-accent">
           Collections
         </p>
@@ -148,6 +81,35 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Featured products */}
+      <section className="mx-auto max-w-7xl px-6 pb-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-widest text-accent">
+              Best Sellers
+            </p>
+            <h2 className="mt-2 font-display text-3xl italic text-ink sm:text-4xl">
+              Eight pieces our regulars keep coming back for
+            </h2>
+          </div>
+          <Link
+            href="/shop"
+            className="font-mono text-xs uppercase tracking-widest text-primary hover:text-accent"
+          >
+            Shop all cakes →
+          </Link>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* All products */}
+      <AllProductsSection products={products} />
 
       {/* Atelier / about */}
       <section id="atelier" className="border-t border-border bg-lavender">
