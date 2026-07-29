@@ -68,6 +68,7 @@
 
   --animate-hero-text-in: hero-text-in 0.8s ease-out both;
   --animate-marquee: marquee 26s linear infinite;
+  --animate-dropdown-in: dropdown-in 0.16s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes hero-text-in {
@@ -78,6 +79,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 

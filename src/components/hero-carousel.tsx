@@ -114,7 +114,7 @@ export function HeroCarousel() {
 
       <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-ink/75 via-ink/20 to-ink/5" />
 
-      <div className="relative z-20 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-24 sm:justify-center sm:pb-0">
+      <div className="relative z-20 mx-auto flex h-full max-w-[1450px] flex-col justify-end px-6 pb-24 sm:justify-center sm:pb-0">
         <div key={active} className="animate-hero-text-in max-w-xl">
           <p className="font-mono text-xs uppercase tracking-widest text-lavender">
             {slide.kicker}

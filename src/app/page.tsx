@@ -33,7 +33,7 @@ export default function Home() {
 
       {/* Stats strip */}
       <section className="border-y border-border bg-lavender">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-10 text-center sm:grid-cols-4">
+        <div className="mx-auto grid max-w-[1450px] grid-cols-2 gap-8 px-6 py-10 text-center sm:grid-cols-4">
           {[
             ["8", "Years in kitchen"],
             ["500+", "Cakes baked"],
@@ -51,7 +51,7 @@ export default function Home() {
       </section>
 
             {/* Categories */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
+      <section className="mx-auto max-w-[1450px] px-6 py-20">
         <p className="font-mono text-xs uppercase tracking-widest text-accent">
           Collections
         </p>
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* Featured products */}
-      <section className="mx-auto max-w-7xl px-6 pb-20">
+      <section className="mx-auto max-w-[1450px] px-6 pb-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="font-mono text-xs uppercase tracking-widest text-accent">
@@ -113,7 +113,7 @@ export default function Home() {
 
       {/* Atelier / about */}
       <section id="atelier" className="border-t border-border bg-lavender">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
+        <div className="mx-auto grid max-w-[1450px] gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
           <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl md:order-2">
             <Image
               src="/images/atelier-interior.jpg"
@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 py-20 text-center">
+      <section className="mx-auto max-w-[1450px] px-6 py-20 text-center">
         <p className="font-mono text-xs uppercase tracking-widest text-accent">
           Bespoke Commissions
         </p>

@@ -40,7 +40,7 @@ export default async function ProductPage({
     .slice(0, 3);
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
+    <div className="mx-auto max-w-[1450px] px-6 py-16">
       <nav className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
         <Link href="/shop" className="hover:text-accent">
           Shop

@@ -35,7 +35,7 @@ export default function CartPage() {
   const total = subtotal + delivery;
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
+    <div className="mx-auto max-w-[1450px] px-6 py-16">
       <p className="font-mono text-xs uppercase tracking-widest text-accent">
         Your Cart
       </p>
