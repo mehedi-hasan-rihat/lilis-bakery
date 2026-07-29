@@ -67,7 +67,7 @@ export default function CartPage() {
                       {item.name}
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      {item.sizeLabel}
+                      {item.flavorLabel} · {item.sizeLabel}
                     </p>
                   </div>
                   <p className="font-display text-lg text-primary">

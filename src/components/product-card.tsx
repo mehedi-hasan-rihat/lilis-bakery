@@ -11,16 +11,29 @@ import { formatPrice } from "@/lib/currency";
 export function ProductCard({ product }: { product: Product }) {
   const { addItem, openDrawer } = useCart();
   const router = useRouter();
-  const [sizeId, setSizeId] = useState(product.sizes[0].id);
+  const [flavorId, setFlavorId] = useState(product.flavors[0].id);
+  const [sizeId, setSizeId] = useState(product.flavors[0].sizes[0].id);
   const [justAdded, setJustAdded] = useState(false);
 
-  const size = product.sizes.find((s) => s.id === sizeId) ?? product.sizes[0];
+  const flavor =
+    product.flavors.find((f) => f.id === flavorId) ?? product.flavors[0];
+  const size = flavor.sizes.find((s) => s.id === sizeId) ?? flavor.sizes[0];
+
+  function handleFlavorChange(nextFlavorId: string) {
+    setFlavorId(nextFlavorId);
+    const nextFlavor =
+      product.flavors.find((f) => f.id === nextFlavorId) ?? product.flavors[0];
+    const stillAvailable = nextFlavor.sizes.some((s) => s.id === sizeId);
+    if (!stillAvailable) setSizeId(nextFlavor.sizes[0].id);
+  }
 
   function handleAdd() {
     addItem({
       productSlug: product.slug,
       name: product.name,
       image: product.image,
+      flavorId: flavor.id,
+      flavorLabel: flavor.name,
       sizeId: size.id,
       sizeLabel: size.label,
       unitPrice: size.price,
@@ -35,6 +48,8 @@ export function ProductCard({ product }: { product: Product }) {
       productSlug: product.slug,
       name: product.name,
       image: product.image,
+      flavorId: flavor.id,
+      flavorLabel: flavor.name,
       sizeId: size.id,
       sizeLabel: size.label,
       unitPrice: size.price,
@@ -73,6 +88,21 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="mt-auto flex flex-col gap-3 pt-2">
+          {product.flavors.length > 1 && (
+            <select
+              value={flavorId}
+              onChange={(e) => handleFlavorChange(e.target.value)}
+              aria-label={`Flavour for ${product.name}`}
+              className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none"
+            >
+              {product.flavors.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.name}
+                </option>
+              ))}
+            </select>
+          )}
+
           <div className="flex items-center justify-between gap-3">
             <select
               value={sizeId}
@@ -80,7 +110,7 @@ export function ProductCard({ product }: { product: Product }) {
               aria-label={`Size for ${product.name}`}
               className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none"
             >
-              {product.sizes.map((s) => (
+              {flavor.sizes.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.label} · {s.serves}
                 </option>

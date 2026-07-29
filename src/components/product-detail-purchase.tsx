@@ -9,11 +9,22 @@ import { formatPrice } from "@/lib/currency";
 export function ProductDetailPurchase({ product }: { product: Product }) {
   const { addItem, openDrawer } = useCart();
   const router = useRouter();
-  const [sizeId, setSizeId] = useState(product.sizes[0].id);
+  const [flavorId, setFlavorId] = useState(product.flavors[0].id);
+  const [sizeId, setSizeId] = useState(product.flavors[0].sizes[0].id);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
 
-  const size = product.sizes.find((s) => s.id === sizeId) ?? product.sizes[0];
+  const flavor =
+    product.flavors.find((f) => f.id === flavorId) ?? product.flavors[0];
+  const size = flavor.sizes.find((s) => s.id === sizeId) ?? flavor.sizes[0];
+
+  function handleFlavorChange(nextFlavorId: string) {
+    setFlavorId(nextFlavorId);
+    const nextFlavor =
+      product.flavors.find((f) => f.id === nextFlavorId) ?? product.flavors[0];
+    const stillAvailable = nextFlavor.sizes.some((s) => s.id === sizeId);
+    if (!stillAvailable) setSizeId(nextFlavor.sizes[0].id);
+  }
 
   function handleAdd() {
     addItem(
@@ -21,6 +32,8 @@ export function ProductDetailPurchase({ product }: { product: Product }) {
         productSlug: product.slug,
         name: product.name,
         image: product.image,
+        flavorId: flavor.id,
+        flavorLabel: flavor.name,
         sizeId: size.id,
         sizeLabel: size.label,
         unitPrice: size.price,
@@ -38,6 +51,8 @@ export function ProductDetailPurchase({ product }: { product: Product }) {
         productSlug: product.slug,
         name: product.name,
         image: product.image,
+        flavorId: flavor.id,
+        flavorLabel: flavor.name,
         sizeId: size.id,
         sizeLabel: size.label,
         unitPrice: size.price,
@@ -56,12 +71,36 @@ export function ProductDetailPurchase({ product }: { product: Product }) {
         <span className="text-sm text-muted-foreground">{size.serves}</span>
       </div>
 
+      {product.flavors.length > 1 && (
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            Flavour
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {product.flavors.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => handleFlavorChange(f.id)}
+                className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                  f.id === flavorId
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border text-ink hover:border-accent hover:text-accent"
+                }`}
+              >
+                {f.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div>
         <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
           Size
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
-          {product.sizes.map((s) => (
+          {flavor.sizes.map((s) => (
             <button
               key={s.id}
               type="button"

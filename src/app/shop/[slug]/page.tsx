@@ -19,7 +19,7 @@ export async function generateMetadata({
   const product = getProductBySlug(slug);
   if (!product) return {};
   return {
-    title: `${product.name} — Lilas Bakery`,
+    title: `${product.name} — Mimi's  Dream Cakes`,
     description: product.description,
   };
 }

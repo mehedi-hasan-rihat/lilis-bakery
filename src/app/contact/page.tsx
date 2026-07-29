@@ -100,15 +100,15 @@ export default function ContactPage() {
               Email
             </p>
             <a
-              href="mailto:hello@lilasbakery.com"
+              href="mailto:hello@mimisdreamcakes.com"
               className="mt-1 block text-sm text-ink hover:text-accent"
             >
-              hello@lilasbakery.com
+              hello@mimisdreamcakes.com
             </a>
           </div>
           <div>
             <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-              Atelier
+              Bakery
             </p>
             <p className="mt-1 text-sm text-ink">12 Sugar Lane, Purple District</p>
           </div>

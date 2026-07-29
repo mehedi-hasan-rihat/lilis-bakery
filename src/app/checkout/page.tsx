@@ -134,7 +134,7 @@ export default function CheckoutPage() {
                 name="fulfillment"
                 checked={fulfillment === "pickup"}
                 onSelect={() => setFulfillment("pickup")}
-                title="Pickup at atelier"
+                title="Pickup at bakery"
                 subtitle="12 Sugar Lane · Free"
               />
             </div>
@@ -244,7 +244,9 @@ export default function CheckoutPage() {
                 <div className="flex flex-1 items-start justify-between text-sm">
                   <div>
                     <p className="text-ink">{item.name}</p>
-                    <p className="text-muted-foreground">{item.sizeLabel}</p>
+                    <p className="text-muted-foreground">
+                      {item.flavorLabel} · {item.sizeLabel}
+                    </p>
                   </div>
                   <p className="text-ink">
                     {formatPrice(item.unitPrice * item.quantity)}

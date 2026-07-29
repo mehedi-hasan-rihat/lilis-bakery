@@ -14,6 +14,8 @@ export interface CartItem {
   productSlug: string;
   name: string;
   image: string;
+  flavorId: string;
+  flavorLabel: string;
   sizeId: string;
   sizeLabel: string;
   unitPrice: number;
@@ -63,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = useCallback(
     (item: Omit<CartItem, "key" | "quantity">, quantity = 1) => {
-      const key = `${item.productSlug}-${item.sizeId}`;
+      const key = `${item.productSlug}-${item.flavorId}-${item.sizeId}`;
       setItems((current) => {
         const existing = current.find((entry) => entry.key === key);
         if (existing) {

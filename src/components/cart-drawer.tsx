@@ -72,7 +72,9 @@ export function CartDrawer() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <p className="font-display text-base text-ink">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.sizeLabel}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.flavorLabel} · {item.sizeLabel}
+                        </p>
                       </div>
                       <p className="font-display text-sm text-primary">
                         {formatPrice(item.unitPrice * item.quantity)}

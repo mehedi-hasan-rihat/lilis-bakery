@@ -66,7 +66,9 @@ export function ShopGrid({
     () =>
       products.map((product) => ({
         product,
-        startingPrice: Math.min(...product.sizes.map((s) => s.price)),
+        startingPrice: Math.min(
+          ...product.flavors.flatMap((f) => f.sizes.map((s) => s.price))
+        ),
       })),
     []
   );

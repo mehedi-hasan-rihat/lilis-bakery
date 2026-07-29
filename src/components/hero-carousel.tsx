@@ -12,21 +12,28 @@ interface Slide {
   subtitle: string;
   ctaLabel: string;
   ctaHref: string;
-  /** CSS object-position, tuned per photo so the subject isn't cropped out on wide/short hero bands. */
-  focus: string;
 }
 
 const SLIDES: Slide[] = [
+  {
+    src: "/images/atelier-interior.jpg",
+    alt: "Mimi's  Dream Cakes counter, display shelves and honeycomb ceiling",
+    kicker: "A Bakery, Not a Factory",
+    title: "Step inside our light-filled bakery",
+    subtitle:
+      "Every cake is finished by hand in a small purple-lit bakery, not on a factory line.",
+    ctaLabel: "Our Bakery",
+    ctaHref: "/#bakery",
+  },
   {
     src: "/images/hero-cake.jpg",
     alt: "Three-tier purple ombré drip cake finished with silk peonies",
     kicker: "Handcrafted Cakes & Sweet Treats",
     title: "The quiet art of cake making",
     subtitle:
-      "A small atelier making seasonal cakes, celebration bakes and petit fours from scratch.",
+      "A small bakery making seasonal cakes, celebration bakes and petit fours from scratch.",
     ctaLabel: "Shop Best Sellers",
     ctaHref: "/shop",
-    focus: "center 22%",
   },
   {
     src: "/images/magic-unicorn.jpg",
@@ -37,7 +44,6 @@ const SLIDES: Slide[] = [
       "Gold leaf horns, rainbow manes and every showstopper a birthday table needs.",
     ctaLabel: "Shop Celebration Cakes",
     ctaHref: "/shop?category=celebration",
-    focus: "center 10%",
   },
   {
     src: "/images/lavender-rosette.jpg",
@@ -48,7 +54,6 @@ const SLIDES: Slide[] = [
       "Multi-layer designs finished with hand-painted ombré, sugar drips and silk peonies.",
     ctaLabel: "Shop Wedding Cakes",
     ctaHref: "/shop?category=wedding",
-    focus: "center 20%",
   },
   {
     src: "/images/petits-fours.jpg",
@@ -59,8 +64,7 @@ const SLIDES: Slide[] = [
       "Hand-tied boxes of macarons and petite cupcakes, baked fresh in small batches.",
     ctaLabel: "Shop Petits Fours",
     ctaHref: "/shop?category=petits-fours",
-    focus: "center 70%",
-  },
+  }
 ];
 
 const INTERVAL_MS = 6000;
@@ -87,95 +91,107 @@ export function HeroCarousel() {
 
   return (
     <div
-      className="group relative h-[78vh] min-h-[560px] w-full overflow-hidden bg-lavender sm:h-[85vh]"
+      className="relative overflow-hidden border-b border-border bg-lavender"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {SLIDES.map((s, index) => (
-        <div
-          key={s.src}
-          aria-hidden={index !== active}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === active ? "z-10 opacity-100" : "opacity-0"
-          }`}
-        >
-          <Image
-            key={index === active ? `${s.src}-active` : s.src}
-            src={s.src}
-            alt={s.alt}
-            fill
-            preload={index === 0}
-            sizes="100vw"
-            style={{ objectPosition: s.focus }}
-            className="object-cover"
-          />
-        </div>
-      ))}
+      {/* Decorative glows — purely cosmetic, sized independently of any photo. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/20 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
+      />
 
-      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-ink/75 via-ink/20 to-ink/5" />
+      <div className="relative mx-auto grid max-w-[1450px] gap-12 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:gap-10 lg:py-24">
+        {/* Text column */}
+        <div className="order-2 lg:order-1">
+          <div key={active} className="animate-hero-text-in max-w-xl">
+            <p className="font-mono text-xs uppercase tracking-widest text-accent">
+              {slide.kicker}
+            </p>
+            <h1 className="mt-4 font-display text-4xl italic leading-[1.05] text-ink sm:text-6xl">
+              {slide.title}
+            </h1>
+            <p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">
+              {slide.subtitle}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href={slide.ctaHref}
+                className="rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
+              >
+                {slide.ctaLabel}
+              </Link>
+              <Link
+                href="/#bakery"
+                className="rounded-full border border-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                Our Bakery
+              </Link>
+            </div>
+          </div>
 
-      <div className="relative z-20 mx-auto flex h-full max-w-[1450px] flex-col justify-end px-6 pb-24 sm:justify-center sm:pb-0">
-        <div key={active} className="animate-hero-text-in max-w-xl">
-          <p className="font-mono text-xs uppercase tracking-widest text-lavender">
-            {slide.kicker}
-          </p>
-          <h1 className="mt-4 font-display text-4xl italic leading-[1.05] text-white sm:text-6xl">
-            {slide.title}
-          </h1>
-          <p className="mt-5 max-w-md text-base leading-7 text-white/80">
-            {slide.subtitle}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href={slide.ctaHref}
-              className="rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
+          <div className="mt-10 flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => goTo(active - 1)}
+              aria-label="Previous slide"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-ink transition-colors hover:border-accent hover:text-accent"
             >
-              {slide.ctaLabel}
-            </Link>
-            <Link
-              href="/#atelier"
-              className="rounded-full border border-white/70 px-7 py-3 font-mono text-xs uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-ink"
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <div className="flex gap-2">
+              {SLIDES.map((s, index) => (
+                <button
+                  key={s.src}
+                  type="button"
+                  onClick={() => goTo(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={index === active}
+                  className={`h-1.5 rounded-full transition-all duration-500 ${
+                    index === active ? "w-8 bg-primary" : "w-3 bg-primary/25 hover:bg-primary/50"
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => goTo(active + 1)}
+              aria-label="Next slide"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-ink transition-colors hover:border-accent hover:text-accent"
             >
-              Our Atelier
-            </Link>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
 
-      <button
-        type="button"
-        onClick={() => goTo(active - 1)}
-        aria-label="Previous slide"
-        className="absolute left-4 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-ink opacity-0 backdrop-blur transition-opacity duration-300 hover:bg-white group-hover:opacity-100 sm:left-8"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        onClick={() => goTo(active + 1)}
-        aria-label="Next slide"
-        className="absolute right-4 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-ink opacity-0 backdrop-blur transition-opacity duration-300 hover:bg-white group-hover:opacity-100 sm:right-8"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </button>
-
-      <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 gap-2">
-        {SLIDES.map((s, index) => (
-          <button
-            key={s.src}
-            type="button"
-            onClick={() => goTo(index)}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === active}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              index === active ? "w-8 bg-white" : "w-3 bg-white/40 hover:bg-white/70"
-            }`}
-          />
-        ))}
+        {/* Image column — fixed-aspect frame, so the crop is set by width alone and never by browser window height. */}
+        <div className="relative order-1 mx-auto w-full max-w-md lg:order-2 lg:max-w-none">
+          <div className="relative aspect-square w-full overflow-hidden rounded-4xl border border-border shadow-2xl shadow-ink/10">
+            {SLIDES.map((s, index) => (
+              <Image
+                key={s.src}
+                src={s.src}
+                alt={s.alt}
+                fill
+                preload={index === 0}
+                sizes="(max-width: 1024px) 90vw, 45vw"
+                className={`object-cover transition-all duration-700 ease-out ${
+                  index === active
+                    ? "scale-100 opacity-100"
+                    : "scale-105 opacity-0"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

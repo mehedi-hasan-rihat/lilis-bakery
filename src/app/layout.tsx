@@ -24,9 +24,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lilas Bakery — Handcrafted Cakes & Sweet Treats",
+  title: "Mimi's  Dream Cakes — Handcrafted Cakes & Sweet Treats",
   description:
-    "Whimsical, handcrafted cakes for weddings, birthdays and every sweet moment. Order custom cakes, celebration cakes and petits fours from Lilas Bakery.",
+    "Whimsical, handcrafted cakes for weddings, birthdays and every sweet moment. Order custom cakes, celebration cakes and petits fours from Mimi's  Dream Cakes.",
 };
 
 export default function RootLayout({

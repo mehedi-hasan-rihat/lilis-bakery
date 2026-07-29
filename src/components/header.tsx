@@ -9,7 +9,7 @@ import { formatPrice } from "@/lib/currency";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Contact US" },
 ];
 
 export function Header() {
@@ -41,7 +41,7 @@ export function Header() {
           className="shrink-0 font-display text-2xl italic tracking-tight text-primary"
           onClick={() => setMenuOpen(false)}
         >
-          Lilas Bakery
+          Mimi's  Dream Cakes
         </Link>
 
         <form

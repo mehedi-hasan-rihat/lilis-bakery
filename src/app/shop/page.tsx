@@ -3,9 +3,9 @@ import { ShopGrid } from "@/components/shop-grid";
 import type { ProductCategory } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Shop — Lilas Bakery",
+  title: "Shop — Mimi's  Dream Cakes",
   description:
-    "Browse signature cakes, celebration cakes, wedding cakes and petits fours, handcrafted to order at Lilas Bakery.",
+    "Browse signature cakes, celebration cakes, wedding cakes and petits fours, handcrafted to order at Mimi's  Dream Cakes.",
 };
 
 const VALID_CATEGORIES: ProductCategory[] = [
