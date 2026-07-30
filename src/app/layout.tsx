@@ -4,6 +4,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CartDrawer } from "@/components/cart-drawer";
+import { FloatingContact } from "@/components/floating-contact";
 import "./globals.css";
 import { Marquee } from "@/components/marquee";
 
@@ -48,6 +49,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
           <CartDrawer />
+          <FloatingContact />
         </CartProvider>
       </body>
     </html>
