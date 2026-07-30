@@ -51,8 +51,8 @@ export function Header() {
 
   return (
     <>
-    <header className="sticky top-0 z-50 border-b border-border bg-paper/90 backdrop-blur">
-      <div className="mx-auto flex h-18 max-w-[1450px] items-center gap-2 px-4 py-4 sm:gap-4 sm:px-6">
+    <header className="border-b border-border bg-paper/90 backdrop-blur">
+      <div className="relative mx-auto flex h-18 max-w-[1450px] items-center gap-2 px-4 py-4 sm:gap-4 sm:px-6">
         <button
           type="button"
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-ink transition-colors hover:border-accent hover:text-accent sm:h-10 sm:w-10 lg:hidden"
@@ -68,7 +68,7 @@ export function Header() {
 
         <Link
           href="/"
-          className="shrink-0 font-display text-lg italic tracking-tight text-primary sm:text-2xl"
+          className="mr-auto shrink-0 font-display text-lg italic tracking-tight text-primary sm:text-2xl lg:mr-0"
           onClick={() => setMenuOpen(false)}
         >
           Mimi's  Dream Cakes
@@ -76,83 +76,112 @@ export function Header() {
 
         <HeaderSearch />
 
-        <nav className="ml-auto hidden items-center gap-6 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`whitespace-nowrap font-mono text-xs uppercase tracking-widest transition-colors hover:text-accent ${
-                pathname === link.href ? "text-accent" : "text-muted-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="ml-auto hidden items-center gap-7 lg:flex">
+          {NAV_LINKS.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className="group relative block whitespace-nowrap py-1 font-mono text-xs uppercase tracking-widest"
+              >
+                {/* Label rolls up on hover and an accent copy takes its place. */}
+                <span className="relative block overflow-hidden">
+                  <span
+                    className={`block transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full ${
+                      active ? "text-accent" : "text-muted-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-full block text-accent transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full"
+                  >
+                    {link.label}
+                  </span>
+                </span>
+                <span
+                  className={`absolute -bottom-0.5 left-0 block h-px w-full origin-left bg-accent transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${
+                    active ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <span className="hidden h-8 w-px bg-border lg:block" />
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-4 lg:ml-0">
-          <a
-            href={PHONE_HREF}
-            className="hidden items-center gap-2 text-ink transition-colors hover:text-accent xl:flex"
-          >
-            <PhoneIcon />
-            <span className="flex flex-col leading-tight">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                Call Us Now
+        {/*
+          Below `lg` the trailing controls are ordered phone · search · cart and
+          pushed right by the logo's auto margin; from `lg` up they fall back to
+          DOM order, which puts the search box beside the logo.
+        */}
+        <a
+          href={PHONE_HREF}
+          className="hidden items-center gap-2 text-ink transition-colors hover:text-accent xl:flex"
+        >
+          <PhoneIcon />
+          <span className="flex flex-col leading-tight">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              Call Us Now
+            </span>
+            <span className="text-sm font-medium">{PHONE}</span>
+          </span>
+        </a>
+
+        {/*
+          Tap-to-call stays reachable once the full block is too wide. Hidden
+          under 400px, where the bar has no room left — the slide-over carries
+          the number there.
+        */}
+        <a
+          href={PHONE_HREF}
+          aria-label={`Call us now, ${PHONE}`}
+          className="order-3 hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-ink transition-colors hover:border-accent hover:text-accent min-[400px]:flex sm:h-10 sm:w-10 lg:order-0 xl:hidden"
+        >
+          <PhoneIcon size={17} />
+        </a>
+
+        <span className="hidden h-8 w-px bg-border xl:block" />
+
+        <button
+          type="button"
+          onClick={openDrawer}
+          className="relative order-5 flex items-center gap-3 rounded-full border border-border py-1.5 pl-1.5 pr-1.5 text-ink transition-colors hover:border-accent hover:text-accent sm:pl-4 lg:order-0"
+          aria-label={`Cart, ${itemCount} item${itemCount === 1 ? "" : "s"}, ${formatPrice(subtotal)}`}
+        >
+          <span className="hidden flex-col items-end leading-tight sm:flex">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              Cart
+            </span>
+            <span className="text-sm font-medium">{formatPrice(subtotal)}</span>
+          </span>
+
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {itemCount > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 font-mono text-[10px] font-medium text-accent-foreground">
+                {itemCount}
               </span>
-              <span className="text-sm font-medium">{PHONE}</span>
-            </span>
-          </a>
-
-          {/* Tap-to-call stays reachable once the full block is too wide. */}
-          <a
-            href={PHONE_HREF}
-            aria-label={`Call us now, ${PHONE}`}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-ink transition-colors hover:border-accent hover:text-accent sm:h-10 sm:w-10 xl:hidden"
-          >
-            <PhoneIcon size={17} />
-          </a>
-
-          <span className="hidden h-8 w-px bg-border xl:block" />
-
-          <button
-            type="button"
-            onClick={openDrawer}
-            className="relative flex items-center gap-3 rounded-full border border-border py-1.5 pl-1.5 pr-1.5 text-ink transition-colors hover:border-accent hover:text-accent sm:pl-4"
-            aria-label={`Cart, ${itemCount} item${itemCount === 1 ? "" : "s"}, ${formatPrice(subtotal)}`}
-          >
-            <span className="hidden flex-col items-end leading-tight sm:flex">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                Cart
-              </span>
-              <span className="text-sm font-medium">{formatPrice(subtotal)}</span>
-            </span>
-
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                <path d="M3 6h18" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-              </svg>
-              {itemCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 font-mono text-[10px] font-medium text-accent-foreground">
-                  {itemCount}
-                </span>
-              )}
-            </span>
-          </button>
-        </div>
+            )}
+          </span>
+        </button>
       </div>
 
     </header>
@@ -167,9 +196,8 @@ export function Header() {
       aria-modal="true"
       aria-label="Menu"
       inert={!menuOpen}
-      className={`fixed inset-0 z-60 flex flex-col bg-linear-to-b from-lavender to-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
-        menuOpen ? "translate-x-0" : "translate-x-full"
-      }`}
+      style={{ transform: menuOpen ? "translateX(0)" : "translateX(100%)" }}
+      className="fixed inset-0 z-60 flex flex-col bg-linear-to-b from-lavender to-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
     >
       <div className="flex h-18 shrink-0 items-center justify-between px-4 py-4 sm:px-6">
         <span className="font-display text-lg italic tracking-tight text-primary sm:text-2xl">

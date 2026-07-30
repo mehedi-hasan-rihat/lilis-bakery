@@ -50,24 +50,46 @@ export function HeaderSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const rootRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const optionRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const results = useMemo(() => search(query), [query]);
-  const showPanel = open && query.trim().length > 0;
+  const showPanel = expanded && open && query.trim().length > 0;
+
+  /** From `lg` up the box is permanently open, so there is nothing to fold away. */
+  function isDesktop() {
+    return window.matchMedia("(min-width: 64rem)").matches;
+  }
+
+  /** Dismiss: closes the results, and on phones folds back to the icon. */
+  function collapse() {
+    setOpen(false);
+    if (!isDesktop()) {
+      setExpanded(false);
+      setQuery("");
+    }
+  }
+
+  // Focus once the input has actually rendered as focusable. Skipped on desktop,
+  // where the box is always open and stealing focus would be rude.
+  useEffect(() => {
+    if (expanded && !isDesktop()) inputRef.current?.focus();
+  }, [expanded]);
 
   useEffect(() => {
-    if (!showPanel) return;
+    if (!expanded) return;
 
     function handlePointerDown(event: PointerEvent) {
       if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
-        setOpen(false);
+        collapse();
       }
     }
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [showPanel]);
+  }, [expanded]);
 
   useEffect(() => {
     setHighlighted(0);
@@ -82,12 +104,14 @@ export function HeaderSearch() {
   function goTo(slug: string) {
     setOpen(false);
     setQuery("");
+    if (!isDesktop()) setExpanded(false);
     router.push(`/shop/${slug}`);
   }
 
   function handleKeyDown(event: React.KeyboardEvent) {
     if (event.key === "Escape") {
-      setOpen(false);
+      collapse();
+      inputRef.current?.blur();
       return;
     }
     if (!showPanel || results.length === 0) return;
@@ -118,10 +142,22 @@ export function HeaderSearch() {
       ref={rootRef}
       onSubmit={handleSubmit}
       role="search"
-      className="relative hidden min-w-0 flex-1 items-center sm:flex"
+      className={`order-4 flex min-w-0 shrink items-center transition-[opacity,width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:relative lg:inset-auto lg:z-auto lg:order-0 lg:w-full lg:max-w-md ${
+        expanded
+          ? // On phones the open box overlays the bar rather than squeezing it.
+            "absolute inset-x-4 inset-y-4 z-20 w-auto max-w-none sm:inset-x-6"
+          : "relative w-10 max-w-10"
+      }`}
     >
-      <div className="flex w-full max-w-md items-center overflow-hidden rounded-full border border-border bg-card focus-within:border-accent">
+      <div
+        className={`flex h-10 w-full items-center overflow-hidden rounded-full border transition-[border-color,box-shadow] duration-300 ${
+          expanded
+            ? "border-accent shadow-md shadow-primary/10"
+            : "border-border hover:border-accent lg:border-border"
+        }`}
+      >
         <input
+          ref={inputRef}
           type="text"
           name="search"
           autoComplete="off"
@@ -133,25 +169,34 @@ export function HeaderSearch() {
               ? `header-search-option-${highlighted}`
               : undefined
           }
+          aria-label="Search cakes & petits fours"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
             setOpen(true);
           }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => {
+            setOpen(true);
+            setExpanded(true);
+          }}
           onKeyDown={handleKeyDown}
           placeholder="Search cakes & petits fours"
-          className="w-full bg-transparent px-4 py-2.5 text-sm text-ink placeholder:text-muted-foreground focus:outline-none"
+          className={`min-w-0 bg-transparent text-sm text-ink transition-opacity duration-300 placeholder:text-muted-foreground focus:outline-none lg:visible lg:flex-1 lg:pl-4 lg:opacity-100 ${
+            expanded
+              ? "flex-1 pl-4 opacity-100 delay-100"
+              : // `invisible` also drops it out of the tab order while collapsed.
+                "invisible w-0 flex-none p-0 opacity-0 lg:w-auto"
+          }`}
         />
-        {query && (
+        {expanded && query && (
           <button
             type="button"
             aria-label="Clear search"
             onClick={() => {
               setQuery("");
-              setOpen(false);
+              inputRef.current?.focus();
             }}
-            className="flex h-9 w-8 shrink-0 items-center justify-center text-muted-foreground hover:text-accent"
+            className="flex h-9 w-7 shrink-0 items-center justify-center text-muted-foreground hover:text-accent"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M6 6l12 12M18 6 6 18" />
@@ -161,9 +206,26 @@ export function HeaderSearch() {
         <button
           type="submit"
           aria-label="Search"
-          className="flex h-9 w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-accent"
+          onClick={() => setExpanded(true)}
+          className={`flex h-10 w-10 shrink-0 items-center justify-center transition-colors ${
+            expanded
+              ? "text-accent"
+              : "text-muted-foreground hover:text-accent"
+          }`}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              expanded ? "rotate-0 scale-105" : "-rotate-12 lg:rotate-0"
+            }`}
+          >
             <circle cx="11" cy="11" r="7" />
             <path d="m20 20-3.5-3.5" />
           </svg>
@@ -171,7 +233,7 @@ export function HeaderSearch() {
       </div>
 
       {showPanel && (
-        <div className="animate-dropdown-in absolute left-0 top-full z-40 mt-2 w-full max-w-md overflow-hidden rounded-xl border border-border bg-card shadow-xl shadow-ink/10">
+        <div className="animate-dropdown-in absolute left-0 top-full z-40 mt-2 w-full sm:max-w-md overflow-hidden rounded-xl border border-border bg-card shadow-xl shadow-ink/10">
           {results.length > 0 ? (
             <ul
               id="header-search-results"

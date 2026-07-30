@@ -41,9 +41,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <CartProvider>
-          {/* Marquee */}
-          <Marquee />
-          <Header />
+          <div className="sticky top-0 z-50 ">
+            <Marquee />
+            <Header />
+          </div>
           <main className="flex-1">{children}</main>
           <Footer />
           <CartDrawer />
