@@ -25,43 +25,125 @@ function generateOrderNumber() {
   return `LB-${Math.floor(10000 + Math.random() * 90000)}`;
 }
 
-function buildReceiptText(order: ConfirmedOrder) {
-  const lines = [
-    "MIMI'S DREAM CAKES",
-    "Order Receipt",
-    "----------------------------------------",
-    `Order #: ${order.orderNumber}`,
-    `Date: ${order.placedAt.toLocaleString("en-BD")}`,
-    order.name ? `Customer: ${order.name}` : undefined,
-    `Fulfillment: ${order.fulfillment === "delivery" ? "Hand delivered" : "Pickup at bakery"}`,
-    "----------------------------------------",
-    "Items:",
-    ...order.items.map(
-      (item) =>
-        `  ${item.name} (${item.flavorLabel} · ${item.sizeLabel}) x${item.quantity} — ${formatPrice(item.unitPrice * item.quantity)}`
-    ),
-    "----------------------------------------",
-    `Subtotal: ${formatPrice(order.subtotal)}`,
-    `Delivery: ${formatPrice(order.delivery)}`,
-    `Total: ${formatPrice(order.total)}`,
-    "----------------------------------------",
-    "Thank you for your order!",
-  ];
-  return lines.filter((line): line is string => Boolean(line)).join("\n");
+const PURPLE: [number, number, number] = [143, 84, 177];
+const INK: [number, number, number] = [19, 16, 25];
+const MUTED: [number, number, number] = [139, 138, 149];
+const BORDER: [number, number, number] = [218, 215, 210];
+const PLUM: [number, number, number] = [65, 35, 84];
+
+/** jsPDF's standard fonts don't include Bengali glyphs, so the Taka sign is spelled out as "Tk" here. */
+function pdfMoney(amount: number) {
+  return `Tk ${Math.round(amount).toLocaleString("en-US")}`;
 }
 
-function downloadReceipt(order: ConfirmedOrder) {
-  const blob = new Blob([buildReceiptText(order)], {
-    type: "text/plain;charset=utf-8",
+async function downloadReceipt(order: ConfirmedOrder) {
+  const { jsPDF } = await import("jspdf");
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 56;
+  const qtyX = pageWidth - margin - 90;
+
+  doc.setFillColor(...PURPLE);
+  doc.rect(0, 0, pageWidth, 108, "F");
+  doc.setTextColor(247, 245, 241);
+  doc.setFont("times", "italic");
+  doc.setFontSize(26);
+  doc.text("Mimi's Dream Cakes", pageWidth / 2, 52, { align: "center" });
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text("O R D E R   R E C E I P T", pageWidth / 2, 74, { align: "center" });
+
+  let y = 144;
+  doc.setFontSize(10);
+  doc.setTextColor(...MUTED);
+  doc.text(`Order #${order.orderNumber}`, margin, y);
+  doc.text(order.placedAt.toLocaleString("en-BD"), pageWidth - margin, y, {
+    align: "right",
   });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `receipt-${order.orderNumber}.txt`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+
+  y += 18;
+  if (order.name) {
+    doc.text(`Customer: ${order.name}`, margin, y);
+  }
+  doc.text(
+    order.fulfillment === "delivery" ? "Hand delivered" : "Pickup at bakery",
+    pageWidth - margin,
+    y,
+    { align: "right" }
+  );
+
+  y += 14;
+  doc.setDrawColor(...BORDER);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 26;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...MUTED);
+  doc.text("ITEM", margin, y);
+  doc.text("QTY", qtyX, y, { align: "right" });
+  doc.text("PRICE", pageWidth - margin, y, { align: "right" });
+  y += 8;
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 22;
+
+  for (const item of order.items) {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...INK);
+    doc.text(item.name, margin, y);
+    doc.text(String(item.quantity), qtyX, y, { align: "right" });
+    doc.text(pdfMoney(item.unitPrice * item.quantity), pageWidth - margin, y, {
+      align: "right",
+    });
+    y += 15;
+    doc.setFontSize(9);
+    doc.setTextColor(...MUTED);
+    doc.text(`${item.flavorLabel} · ${item.sizeLabel}`, margin, y);
+    y += 20;
+  }
+
+  doc.setDrawColor(...BORDER);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 24;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(...MUTED);
+  doc.text("Subtotal", margin, y);
+  doc.text(pdfMoney(order.subtotal), pageWidth - margin, y, { align: "right" });
+  y += 16;
+  doc.text("Delivery", margin, y);
+  doc.text(pdfMoney(order.delivery), pageWidth - margin, y, { align: "right" });
+  y += 10;
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 22;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(15);
+  doc.setTextColor(...INK);
+  doc.text("Total Paid", margin, y);
+  doc.text(pdfMoney(order.total), pageWidth - margin, y, { align: "right" });
+
+  y += 52;
+  doc.setFont("times", "italic");
+  doc.setFontSize(14);
+  doc.setTextColor(...PLUM);
+  doc.text("Thank you for your order — see you soon!", pageWidth / 2, y, {
+    align: "center",
+  });
+
+  y += 22;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(...MUTED);
+  doc.text(
+    "12 Sugar Lane, Purple District  ·  hello@mimisdreamcakes.com",
+    pageWidth / 2,
+    y,
+    { align: "center" }
+  );
+
+  doc.save(`receipt-${order.orderNumber}.pdf`);
 }
 
 export default function CheckoutPage() {
@@ -90,6 +172,7 @@ export default function CheckoutPage() {
   }
 
   if (order) {
+    const firstName = order.name.trim().split(/\s+/)[0];
     return (
       <div className="relative mx-auto max-w-xl overflow-hidden px-6 py-24 text-center">
         <Confetti seed={order.orderNumber} />
@@ -101,25 +184,38 @@ export default function CheckoutPage() {
             </svg>
           </div>
 
-          <div className="animate-success-fade-up" style={{ animationDelay: "0.2s" }}>
-            <p className="mt-6 font-mono text-xs uppercase tracking-widest text-accent">
-              Order Confirmed
-            </p>
-            <h1 className="mt-2 font-display text-4xl italic text-ink">
-              Thank you — it&apos;s in the oven
-            </h1>
-            <p className="mt-4 text-muted-foreground">
-              Your order{" "}
-              <span className="font-mono text-ink">{order.orderNumber}</span>{" "}
-              has been received. We&apos;ll email you a confirmation with your{" "}
-              {order.fulfillment === "delivery" ? "delivery" : "pickup"}{" "}
-              details shortly.
-            </p>
-          </div>
+          <p
+            className="animate-success-fade-up mt-6 font-mono text-xs uppercase tracking-widest text-accent"
+            style={{ animationDelay: "0.15s" }}
+          >
+            Order Confirmed
+          </p>
+          <h1
+            className="animate-success-fade-up mt-2 font-display text-4xl italic text-ink"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <span aria-hidden className="animate-wave inline-block origin-[70%_70%]">
+              👋
+            </span>{" "}
+            {firstName
+              ? `Thank you, ${firstName} — it's in the oven`
+              : "Thank you — it's in the oven"}
+          </h1>
+          <p
+            className="animate-success-fade-up mt-4 text-muted-foreground"
+            style={{ animationDelay: "0.45s" }}
+          >
+            Your order{" "}
+            <span className="font-mono text-ink">{order.orderNumber}</span>{" "}
+            has been received and we&apos;re already lining up the piping
+            bags. We&apos;ll email you a confirmation with your{" "}
+            {order.fulfillment === "delivery" ? "delivery" : "pickup"} details
+            shortly — thank you for baking this moment with us. 💜
+          </p>
 
           <div
             className="animate-success-fade-up mt-8 rounded-lg border border-border bg-card p-6 text-left"
-            style={{ animationDelay: "0.35s" }}
+            style={{ animationDelay: "0.6s" }}
           >
             <ul className="flex flex-col gap-4">
               {order.items.map((item) => (
@@ -169,7 +265,7 @@ export default function CheckoutPage() {
 
           <div
             className="animate-success-fade-up mt-8 flex flex-wrap justify-center gap-4"
-            style={{ animationDelay: "0.5s" }}
+            style={{ animationDelay: "0.75s" }}
           >
             <button
               type="button"

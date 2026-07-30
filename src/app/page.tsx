@@ -4,7 +4,11 @@ import { ProductCard } from "@/components/product-card";
 import { AllProductsSection } from "@/components/all-products-section";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { Marquee } from "@/components/marquee";
-import { products, CATEGORY_LABELS, type ProductCategory } from "@/lib/products";
+import {
+  products,
+  CATEGORY_LABELS,
+  type ProductCategory,
+} from "@/lib/products";
 
 const FEATURED_SLUGS = [
   "wild-berry-bloom",
@@ -22,12 +26,11 @@ const CATEGORY_PREVIEW: { category: ProductCategory; image: string }[] = [
 
 export default function Home() {
   const featured = FEATURED_SLUGS.map((slug) =>
-    products.find((p) => p.slug === slug)
+    products.find((p) => p.slug === slug),
   ).filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <div>
-
       {/* Hero */}
       <HeroCarousel />
 
@@ -50,7 +53,7 @@ export default function Home() {
         </div>
       </section>
 
-            {/* Categories */}
+      {/* Categories */}
       <section className="mx-auto max-w-[1450px] px-6 py-20">
         <p className="font-mono text-xs uppercase tracking-widest text-accent">
           Collections
@@ -59,7 +62,7 @@ export default function Home() {
           Signature, seasonal &amp; celebration
         </h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
           {CATEGORY_PREVIEW.map(({ category, image }) => (
             <Link
               key={category}
@@ -101,7 +104,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}
@@ -131,16 +134,15 @@ export default function Home() {
               A light-filled bakery where every cake is finished by hand
             </h2>
             <p className="mt-5 leading-7 text-muted-foreground">
-              Lilas started from a rented kitchen with one oven and a stack
-              of recipe cards. Years later, the recipes are still hers, the
-              butter is still European, and a limited number of custom
-              orders are still taken each month so every cake gets the
-              attention it deserves.
+              Lilas started from a rented kitchen with one oven and a stack of
+              recipe cards. Years later, the recipes are still hers, the butter
+              is still European, and a limited number of custom orders are still
+              taken each month so every cake gets the attention it deserves.
             </p>
             <p className="mt-4 leading-7 text-muted-foreground">
-              Today the bakery bakes fresh every morning for walk-in
-              customers and pre-booked orders alike — no sitting frozen in a
-              display case, no shortcuts on the ingredients.
+              Today the bakery bakes fresh every morning for walk-in customers
+              and pre-booked orders alike — no sitting frozen in a display case,
+              no shortcuts on the ingredients.
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -205,11 +207,11 @@ export default function Home() {
           Ordering a cake for your occasion?
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-          Wedding &amp; holud stages, Eid spreads, aqiqah, birthdays or a
-          Pohela Boishakh table — message us the occasion, design and guest
-          count on WhatsApp or place an order online, and we&apos;ll confirm
-          your design and price within two days. Hand-delivered fresh across
-          Dhaka, with outlet pick-up available nationwide.
+          Wedding &amp; holud stages, Eid spreads, aqiqah, birthdays or a Pohela
+          Boishakh table — message us the occasion, design and guest count on
+          WhatsApp or place an order online, and we&apos;ll confirm your design
+          and price within two days. Hand-delivered fresh across Dhaka, with
+          outlet pick-up available nationwide.
         </p>
 
         <div className="mx-auto mt-6 flex max-w-lg flex-wrap justify-center gap-2">
@@ -241,7 +243,13 @@ export default function Home() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden
+            >
               <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.51 3.62 1.4 5.12L2 22l5.12-1.5a9.87 9.87 0 0 0 4.92 1.31h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm0 18.06h-.01a8.13 8.13 0 0 1-4.14-1.14l-.3-.18-3.04.89.9-2.96-.2-.31a8.1 8.1 0 0 1-1.24-4.35c0-4.49 3.65-8.14 8.14-8.14 2.17 0 4.21.85 5.75 2.38a8.08 8.08 0 0 1 2.38 5.76c0 4.49-3.66 8.15-8.14 8.15Zm4.46-6.1c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.95-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.16 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.44-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z" />
             </svg>
             Chat on WhatsApp

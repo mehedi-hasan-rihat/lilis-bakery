@@ -68,7 +68,6 @@ export function ProductDetailPurchase({ product }: { product: Product }) {
         <span className="font-display text-3xl text-primary">
           {formatPrice(size.price)}
         </span>
-        <span className="text-sm text-muted-foreground">{size.serves}</span>
       </div>
 
       {product.flavors.length > 1 && (

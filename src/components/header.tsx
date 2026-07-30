@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { HeaderSearch } from "@/components/header-search";
 import { useCart } from "@/lib/cart-context";
 import { formatPrice } from "@/lib/currency";
 
@@ -44,30 +45,7 @@ export function Header() {
           Mimi's  Dream Cakes
         </Link>
 
-        <form
-          onSubmit={(event) => event.preventDefault()}
-          className="hidden flex-1 items-center sm:flex"
-        >
-          <div className="flex w-full max-w-md items-center overflow-hidden rounded-full border border-border bg-card focus-within:border-accent">
-            <input
-              type="text"
-              name="search"
-              autoComplete="off"
-              placeholder="Search cakes & petits fours"
-              className="w-full bg-transparent px-4 py-2.5 text-sm text-ink placeholder:text-muted-foreground focus:outline-none"
-            />
-            <button
-              type="submit"
-              aria-label="Search"
-              className="flex h-9 w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-accent"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" />
-              </svg>
-            </button>
-          </div>
-        </form>
+        <HeaderSearch />
 
         <div className="ml-auto flex items-center gap-4">
           <a
@@ -93,7 +71,7 @@ export function Header() {
             className="relative flex items-center gap-3 rounded-full border border-border py-1.5 pl-4 pr-1.5 text-ink transition-colors hover:border-accent hover:text-accent"
             aria-label={`Cart, ${itemCount} item${itemCount === 1 ? "" : "s"}, ${formatPrice(subtotal)}`}
           >
-            <span className="hidden flex-col items-end leading-tight lg:flex">
+            <span className="flex flex-col items-end leading-tight">
               <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 Cart
               </span>

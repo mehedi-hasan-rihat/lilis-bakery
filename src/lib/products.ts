@@ -14,7 +14,6 @@ export const CATEGORY_LABELS: Record<ProductCategory, string> = {
 export interface ProductSize {
   id: string;
   label: string;
-  serves: string;
   price: number;
 }
 
@@ -80,9 +79,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6800 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9150 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11450 },
+        { id: "6in", label: "6 kg", price: 6800 },
+        { id: "8in", label: "8 kg", price: 9150 },
+        { id: "10in", label: "10 kg", price: 11450 },
       ],
       CAKE_FLAVORS
     ),
@@ -97,9 +96,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6300 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 8650 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11000 },
+        { id: "6in", label: "6 kg", price: 6300 },
+        { id: "8in", label: "8 kg", price: 8650 },
+        { id: "10in", label: "10 kg", price: 11000 },
       ],
       CAKE_FLAVORS
     ),
@@ -115,8 +114,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7250 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10050 },
+        { id: "6in", label: "6 kg", price: 7250 },
+        { id: "8in", label: "8 kg", price: 10050 },
       ],
       CAKE_FLAVORS
     ),
@@ -131,8 +130,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 3750 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 6800 },
+        { id: "box9", label: "Box of 9", price: 3750 },
+        { id: "box18", label: "Box of 18", price: 6800 },
       ],
       BOX_FLAVORS
     ),
@@ -148,8 +147,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 37450 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 56150 },
+        { id: "2tier", label: "Two-tier", price: 37450 },
+        { id: "3tier", label: "Three-tier", price: 56150 },
       ],
       CAKE_FLAVORS
     ),
@@ -164,9 +163,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6600 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 8950 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11250 },
+        { id: "6in", label: "6 kg", price: 6600 },
+        { id: "8in", label: "8 kg", price: 8950 },
+        { id: "10in", label: "10 kg", price: 11250 },
       ],
       CAKE_FLAVORS
     ),
@@ -181,9 +180,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6900 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9300 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11600 },
+        { id: "6in", label: "6 kg", price: 6900 },
+        { id: "8in", label: "8 kg", price: 9300 },
+        { id: "10in", label: "10 kg", price: 11600 },
       ],
       CAKE_FLAVORS
     ),
@@ -199,9 +198,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7100 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9500 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11900 },
+        { id: "6in", label: "6 kg", price: 7100 },
+        { id: "8in", label: "8 kg", price: 9500 },
+        { id: "10in", label: "10 kg", price: 11900 },
       ],
       CAKE_FLAVORS
     ),
@@ -216,9 +215,9 @@ export const products: Product[] = [
     image: "/images/berry-bloom.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7250 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9700 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 12100 },
+        { id: "6in", label: "6 kg", price: 7250 },
+        { id: "8in", label: "8 kg", price: 9700 },
+        { id: "10in", label: "10 kg", price: 12100 },
       ],
       CAKE_FLAVORS
     ),
@@ -233,9 +232,9 @@ export const products: Product[] = [
     image: "/images/lavender-rosette.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6750 },
-        { id: "8in", label: "8 kg", serves: "Serves 12", price: 9100 },
-        { id: "10in", label: "10 kg", serves: "Serves 20", price: 11400 },
+        { id: "6in", label: "6 kg", price: 6750 },
+        { id: "8in", label: "8 kg", price: 9100 },
+        { id: "10in", label: "10 kg", price: 11400 },
       ],
       CAKE_FLAVORS
     ),
@@ -251,8 +250,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 6950 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9650 },
+        { id: "6in", label: "6 kg", price: 6950 },
+        { id: "8in", label: "8 kg", price: 9650 },
       ],
       CAKE_FLAVORS
     ),
@@ -267,8 +266,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7050 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9850 },
+        { id: "6in", label: "6 kg", price: 7050 },
+        { id: "8in", label: "8 kg", price: 9850 },
       ],
       CAKE_FLAVORS
     ),
@@ -283,8 +282,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7350 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10150 },
+        { id: "6in", label: "6 kg", price: 7350 },
+        { id: "8in", label: "8 kg", price: 10150 },
       ],
       CAKE_FLAVORS
     ),
@@ -299,8 +298,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7150 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 9950 },
+        { id: "6in", label: "6 kg", price: 7150 },
+        { id: "8in", label: "8 kg", price: 9950 },
       ],
       CAKE_FLAVORS
     ),
@@ -316,8 +315,8 @@ export const products: Product[] = [
     image: "/images/magic-unicorn.jpg",
     flavors: withFlavors(
       [
-        { id: "6in", label: "6 kg", serves: "Serves 8", price: 7450 },
-        { id: "8in", label: "8 kg", serves: "Serves 14", price: 10250 },
+        { id: "6in", label: "6 kg", price: 7450 },
+        { id: "8in", label: "8 kg", price: 10250 },
       ],
       CAKE_FLAVORS
     ),
@@ -332,8 +331,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 36250 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 54850 },
+        { id: "2tier", label: "Two-tier", price: 36250 },
+        { id: "3tier", label: "Three-tier", price: 54850 },
       ],
       CAKE_FLAVORS
     ),
@@ -348,8 +347,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 38150 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 57450 },
+        { id: "2tier", label: "Two-tier", price: 38150 },
+        { id: "3tier", label: "Three-tier", price: 57450 },
       ],
       CAKE_FLAVORS
     ),
@@ -365,8 +364,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 39450 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 58650 },
+        { id: "2tier", label: "Two-tier", price: 39450 },
+        { id: "3tier", label: "Three-tier", price: 58650 },
       ],
       CAKE_FLAVORS
     ),
@@ -381,8 +380,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 35450 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 53150 },
+        { id: "2tier", label: "Two-tier", price: 35450 },
+        { id: "3tier", label: "Three-tier", price: 53150 },
       ],
       CAKE_FLAVORS
     ),
@@ -397,8 +396,8 @@ export const products: Product[] = [
     image: "/images/hero-cake.jpg",
     flavors: withFlavors(
       [
-        { id: "2tier", label: "Two-tier", serves: "Serves 30", price: 38950 },
-        { id: "3tier", label: "Three-tier", serves: "Serves 50", price: 57950 },
+        { id: "2tier", label: "Two-tier", price: 38950 },
+        { id: "3tier", label: "Three-tier", price: 57950 },
       ],
       CAKE_FLAVORS
     ),
@@ -414,8 +413,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 3900 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 7100 },
+        { id: "box9", label: "Box of 9", price: 3900 },
+        { id: "box18", label: "Box of 18", price: 7100 },
       ],
       BOX_FLAVORS
     ),
@@ -430,8 +429,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 3600 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 6500 },
+        { id: "box9", label: "Box of 9", price: 3600 },
+        { id: "box18", label: "Box of 18", price: 6500 },
       ],
       BOX_FLAVORS
     ),
@@ -446,8 +445,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 4100 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 7500 },
+        { id: "box9", label: "Box of 9", price: 4100 },
+        { id: "box18", label: "Box of 18", price: 7500 },
       ],
       BOX_FLAVORS
     ),
@@ -462,8 +461,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 4000 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 7300 },
+        { id: "box9", label: "Box of 9", price: 4000 },
+        { id: "box18", label: "Box of 18", price: 7300 },
       ],
       BOX_FLAVORS
     ),
@@ -478,8 +477,8 @@ export const products: Product[] = [
     image: "/images/petits-fours.jpg",
     flavors: withFlavors(
       [
-        { id: "box9", label: "Box of 9", serves: "9 pieces", price: 3500 },
-        { id: "box18", label: "Box of 18", serves: "18 pieces", price: 6400 },
+        { id: "box9", label: "Box of 9", price: 3500 },
+        { id: "box18", label: "Box of 18", price: 6400 },
       ],
       BOX_FLAVORS
     ),
