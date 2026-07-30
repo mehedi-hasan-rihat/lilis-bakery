@@ -1,9 +1,9 @@
 const WHATSAPP_HREF =
-  "https://wa.me/8801911234567?text=" +
+  "https://wa.me/8801991401185?text=" +
   encodeURIComponent("Hi Mimi's Dream Cakes! I'd like to ask about a cake order.");
 
 /** Facebook page handle — update if the page username changes. */
-const MESSENGER_HREF = "https://m.me/mimisdreamcakes";
+const MESSENGER_HREF = "https://www.messenger.com/t/mimisdreamcakes2018";
 
 const WhatsAppIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>

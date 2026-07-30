@@ -238,7 +238,7 @@ export default function Home() {
             Order a Custom Cake
           </Link>
           <a
-            href="https://wa.me/8801911234567"
+            href="https://wa.me/8801991401185"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-accent"

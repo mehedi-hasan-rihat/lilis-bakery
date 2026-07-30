@@ -14,7 +14,7 @@ const NAV_LINKS = [
 ];
 
 const PHONE = "+880 1911-234567";
-const PHONE_HREF = "tel:+8801911234567";
+const PHONE_HREF = "tel:+8801991401185";
 
 const PhoneIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
