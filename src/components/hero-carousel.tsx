@@ -15,16 +15,16 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  {
-    src: "/images/atelier-interior.jpg",
-    alt: "Mimi's  Dream Cakes counter, display shelves and honeycomb ceiling",
-    kicker: "A Bakery, Not a Factory",
-    title: "Step inside our light-filled bakery",
-    subtitle:
-      "Every cake is finished by hand in a small purple-lit bakery, not on a factory line.",
-    ctaLabel: "Our Bakery",
-    ctaHref: "/#bakery",
-  },
+  // {
+  //   src: "/images/atelier-interior.jpg",
+  //   alt: "Mimi's  Dream Cakes counter, display shelves and honeycomb ceiling",
+  //   kicker: "A Bakery, Not a Factory",
+  //   title: "Step inside our light-filled bakery",
+  //   subtitle:
+  //     "Every cake is finished by hand in a small purple-lit bakery, not on a factory line.",
+  //   ctaLabel: "Our Bakery",
+  //   ctaHref: "/#bakery",
+  // },
   {
     src: "/images/hero-cake.jpg",
     alt: "Three-tier purple ombré drip cake finished with silk peonies",
