@@ -239,7 +239,7 @@ export function HeroCarousel() {
         </div>
 
         {/* --------------------------------------------------------------- Image */}
-        <div className="relative order-1 mx-auto w-full max-w-md lg:order-2 lg:mx-0 lg:max-w-108 lg:justify-self-end xl:max-w-120">
+        <div className="relative order-1 mx-auto w-full max-w-md lg:order-2 lg:mx-0 lg:max-w-108 lg:justify-self-end xl:max-w-130">
           <div className="relative aspect-square w-full overflow-hidden rounded-4xl border border-border bg-lavender shadow-2xl shadow-ink/10 lg:aspect-4/5">
             {SLIDES.map((s, index) => (
               <Image
