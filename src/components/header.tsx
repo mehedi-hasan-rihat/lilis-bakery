@@ -23,7 +23,7 @@ export function Header() {
       <div className="mx-auto flex h-18 max-w-[1450px] items-center gap-4 px-6 py-4">
         <button
           type="button"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border lg:hidden"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
@@ -47,10 +47,26 @@ export function Header() {
 
         <HeaderSearch />
 
-        <div className="ml-auto flex items-center gap-4">
+        <nav className="ml-auto hidden items-center gap-6 lg:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`whitespace-nowrap font-mono text-xs uppercase tracking-widest transition-colors hover:text-accent ${
+                pathname === link.href ? "text-accent" : "text-muted-foreground"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <span className="hidden h-8 w-px bg-border lg:block" />
+
+        <div className="ml-auto flex items-center gap-4 lg:ml-0">
           <a
             href="tel:+8801911234567"
-            className="hidden items-center gap-2 text-ink transition-colors hover:text-accent lg:flex"
+            className="hidden items-center gap-2 text-ink transition-colors hover:text-accent xl:flex"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 5c0 8.284 6.716 15 15 15h1a1 1 0 0 0 1-1v-3.28a1 1 0 0 0-.76-.97l-3.35-.84a1 1 0 0 0-1.02.32l-1.13 1.36a12.05 12.05 0 0 1-6.34-6.34l1.36-1.13a1 1 0 0 0 .32-1.02l-.84-3.35A1 1 0 0 0 8.28 3H5a1 1 0 0 0-1 1Z" />
@@ -63,7 +79,7 @@ export function Header() {
             </span>
           </a>
 
-          <span className="hidden h-8 w-px bg-border lg:block" />
+          <span className="hidden h-8 w-px bg-border xl:block" />
 
           <button
             type="button"
@@ -103,22 +119,8 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="hidden items-center justify-center gap-8 border-t border-border py-3 md:flex">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`font-mono text-xs uppercase tracking-widest transition-colors hover:text-accent ${
-              pathname === link.href ? "text-accent" : "text-muted-foreground"
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-border bg-paper px-6 py-4 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-border bg-paper px-6 py-4 lg:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

@@ -118,7 +118,7 @@ export function HeaderSearch() {
       ref={rootRef}
       onSubmit={handleSubmit}
       role="search"
-      className="relative hidden flex-1 items-center sm:flex"
+      className="relative hidden min-w-0 flex-1 items-center sm:flex"
     >
       <div className="flex w-full max-w-md items-center overflow-hidden rounded-full border border-border bg-card focus-within:border-accent">
         <input

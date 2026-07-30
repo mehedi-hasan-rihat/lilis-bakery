@@ -76,21 +76,13 @@ export function ProductCard({ product }: { product: Product }) {
           {product.tagline}
         </p>
 
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
-            {size.label}
+        <div className="mt-auto flex items-center justify-between gap-2">
+          <span className="min-w-0 truncate font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
+            {size.label} · {flavor.name}
           </span>
-          <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
-            {flavor.name}
+          <span className="shrink-0 font-display text-lg leading-none text-primary">
+            {formatPrice(size.price)}
           </span>
-        </div>
-
-        <div className="mt-auto flex items-center justify-between pt-1">
-          <div>
-            <span className="font-display text-lg text-primary">
-              {formatPrice(size.price)}
-            </span>
-          </div>
         </div>
 
         <div className="flex gap-2">
