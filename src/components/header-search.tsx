@@ -152,7 +152,7 @@ export function HeaderSearch() {
       <div
         className={`flex h-10 w-full items-center overflow-hidden rounded-full border transition-[border-color,box-shadow] duration-300 ${
           expanded
-            ? "border-accent shadow-md shadow-primary/10"
+            ? "border-accent shadow-md shadow-primary/10 bg-card"
             : "border-border hover:border-accent lg:border-border"
         }`}
       >
